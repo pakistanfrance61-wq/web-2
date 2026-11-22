@@ -1,0 +1,2767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rehan Server | Official Discord Community</title>
+<meta name="description" content="Rehan Server is a premier gaming, hangout, and creator community on Discord. Join voice chats, community events, giveaways, and connect with awesome people.">
+<meta name="theme-color" content="#7C3AED">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,600&family=Russo+One&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+<script>document.documentElement.classList.add('js')</script>
+
+<style>
+/* ==========================================================================
+   CSS CUSTOM PROPERTIES & MODERN RESET
+   ========================================================================== */
+:root {
+  --bg: #090914;
+  --bg-deep: #05050A;
+  --bg-elevated: #111124;
+  --card: rgba(20, 19, 39, 0.68);
+  --card-hover: rgba(29, 27, 56, 0.85);
+  --fg: #F1F5F9;
+  --fg-bright: #FFFFFF;
+  --mut: #94A3B8;
+  --mut-dark: #64748B;
+  
+  /* Cyber & Neon Theme Colors */
+  --p: #7C3AED;      /* Deep Purple */
+  --p-glow: #8B5CF6; /* Bright Violet */
+  --c: #06B6D4;      /* Cyan */
+  --c-glow: #22D3EE; /* Electric Cyan */
+  --m: #EC4899;      /* Magenta Pink */
+  --m-glow: #F472B6; 
+  --l: #84CC16;      /* Lime / Green */
+  --l-glow: #A3E635;
+  --r: #F43F5E;      /* Rose / Alert */
+  --a: #F59E0B;      /* Amber Gold */
+  
+  /* Borders & Shadows */
+  --bd: rgba(255, 255, 255, 0.12);
+  --bd-glow: rgba(124, 58, 237, 0.4);
+  --shadow-neon: 0 0 35px rgba(124, 58, 237, 0.35);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-full: 9999px;
+  
+  --font-display: 'Russo One', sans-serif;
+  --font-body: 'Chakra Petch', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+[hidden] { display: none !important; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--bg);
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.15) 0%, transparent 60%),
+    radial-gradient(circle at 100% 60%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 0% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 50%);
+  color: var(--fg);
+  font: 400 1rem/1.6 var(--font-body);
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Typography */
+h1, h2, h3, .logo-text {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+}
+
+h1 { font-size: clamp(2.4rem, 6.2vw, 4.4rem); }
+h2 { font-size: clamp(1.8rem, 3.8vw, 2.8rem); }
+h3 { font-size: 1.35rem; }
+
+p { color: var(--mut); }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+:focus-visible {
+  outline: 2px solid var(--c-glow);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.skip {
+  position: absolute;
+  left: -999px;
+  top: 10px;
+  background: var(--fg-bright);
+  color: #000;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  z-index: 999;
+}
+.skip:focus { left: 16px; }
+
+/* SVG Icons Helper */
+.i {
+  width: 1.25em;
+  height: 1.25em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* Background Animated Canvas & Orbs */
+#fx {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.ambient-grid {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(circle at 50% 30%, black 20%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at 50% 30%, black 20%, transparent 80%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.35;
+  z-index: 0;
+  pointer-events: none;
+  animation: orbDrift 22s ease-in-out infinite alternate;
+}
+.orb-1 { width: 500px; height: 500px; background: var(--p); top: -150px; left: -100px; }
+.orb-2 { width: 440px; height: 440px; background: var(--c); bottom: -120px; right: -80px; animation-delay: -7s; }
+.orb-3 { width: 360px; height: 360px; background: var(--m); top: 40%; left: 60%; opacity: 0.22; animation-delay: -14s; }
+
+@keyframes orbDrift {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(60px, 40px) scale(1.1); }
+  100% { transform: translate(-40px, 80px) scale(0.95); }
+}
+
+/* Container */
+.w {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+main, footer {
+  position: relative;
+  z-index: 1;
+}
+
+section {
+  padding: 85px 0;
+}
+
+/* ==========================================================================
+   NAVIGATION BAR
+   ========================================================================== */
+body > header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  padding: 14px 0;
+  transition: transform 0.3s ease;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 12px 8px 18px;
+  border-radius: 20px;
+  background: rgba(14, 13, 30, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--bd);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.25rem;
+  letter-spacing: 0.03em;
+  color: var(--fg-bright);
+}
+
+.badge {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--p-glow), var(--m));
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.6);
+  position: relative;
+  overflow: hidden;
+}
+.badge::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.4) 50%, transparent 60%);
+  animation: shine 4s infinite;
+}
+@keyframes shine {
+  0% { transform: translateY(-100%) rotate(45deg); }
+  25%, 100% { transform: translateY(100%) rotate(45deg); }
+}
+
+.nav-center {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.nav-center a {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--fg);
+  transition: all 0.2s ease;
+}
+.nav-center a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--c-glow);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Sound / SFX Toggle Button */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--bd);
+  color: var(--mut);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--c-glow);
+  border-color: rgba(34, 211, 238, 0.4);
+}
+.icon-btn.active {
+  color: var(--l-glow);
+  border-color: rgba(163, 230, 53, 0.4);
+  background: rgba(163, 230, 53, 0.1);
+}
+
+/* Live Online Status Pill */
+.live {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(132, 204, 22, 0.12);
+  border: 1px solid rgba(163, 230, 53, 0.35);
+  color: var(--l-glow);
+  font-weight: 600;
+  font-size: 0.88rem;
+  white-space: nowrap;
+}
+.live-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--l-glow);
+  box-shadow: 0 0 12px var(--l-glow);
+  animation: pulseBeacon 2s infinite ease-in-out;
+}
+@keyframes pulseBeacon {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.4; }
+}
+
+/* ==========================================================================
+   BUTTONS (CYBERPUNK NEON)
+   ========================================================================== */
+.btn {
+  min-height: 46px;
+  padding: 0 22px;
+  border-radius: var(--radius-md);
+  border: 0;
+  font: 600 0.98rem var(--font-body);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s, background 0.2s, border-color 0.2s;
+  user-select: none;
+  white-space: nowrap;
+}
+.btn:active {
+  transform: scale(0.97) !important;
+}
+
+.pri {
+  background: linear-gradient(90deg, #6D28D9 0%, #C026D3 50%, #6D28D9 100%);
+  background-size: 200% 100%;
+  animation: gradientSlide 4s linear infinite;
+  box-shadow: 0 0 24px rgba(124, 58, 237, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.pri:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px rgba(192, 38, 211, 0.65);
+}
+
+.discord-btn {
+  background: linear-gradient(135deg, #5865F2, #4752C4);
+  box-shadow: 0 0 22px rgba(88, 101, 242, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.discord-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 34px rgba(88, 101, 242, 0.7);
+}
+
+.sec {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--bd);
+  color: var(--fg);
+}
+.sec:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-cyan {
+  background: rgba(6, 182, 212, 0.15);
+  border: 1px solid var(--c-glow);
+  color: var(--c-glow);
+}
+.btn-cyan:hover {
+  background: var(--c-glow);
+  color: #000;
+  box-shadow: 0 0 25px rgba(34, 211, 238, 0.5);
+  transform: translateY(-2px);
+}
+
+@keyframes gradientSlide {
+  to { background-position: 200% 0; }
+}
+
+/* ==========================================================================
+   CARDS WITH HOLOGRAPHIC BORDER & 3D TILT
+   ========================================================================== */
+.card {
+  position: relative;
+  background: var(--card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.25s ease-out, border-color 0.3s, box-shadow 0.3s;
+}
+
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.holo-card::before {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--angle), var(--p), var(--c), var(--m), var(--l), var(--p));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.35;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.holo-card:hover::before,
+.holo-card:focus-within::before {
+  opacity: 1;
+  animation: spinHolo 4s linear infinite;
+}
+@keyframes spinHolo {
+  to { --angle: 360deg; }
+}
+
+.tilt {
+  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+}
+.tilt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 255, 255, 0.12), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.tilt:hover::after { opacity: 1; }
+
+/* Scroll Reveal */
+.rv {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--d, 0s);
+}
+.rv.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+.hero {
+  padding-top: 50px;
+  padding-bottom: 70px;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.pillbadge {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  background: rgba(34, 211, 238, 0.1);
+  border: 1px solid rgba(34, 211, 238, 0.45);
+  color: var(--c-glow);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 22px;
+  box-shadow: 0 0 15px rgba(34, 211, 238, 0.15);
+}
+
+.grad {
+  background: linear-gradient(90deg, var(--c-glow), var(--m-glow), var(--l-glow), var(--p-glow), var(--c-glow));
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientSlide 8s linear infinite;
+}
+
+.lead {
+  font-size: 1.18rem;
+  max-width: 36em;
+  margin: 22px 0 32px;
+  line-height: 1.7;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.hero-stat-item b {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--fg-bright);
+  display: block;
+}
+.hero-stat-item span {
+  font-size: 0.85rem;
+  color: var(--mut);
+}
+
+/* ==========================================================================
+   INTERACTIVE DISCORD SIMULATOR (HERO RIGHT)
+   ========================================================================== */
+.disc {
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+.dh {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid var(--bd);
+}
+.dh b {
+  margin-right: auto;
+  font-size: 1.05rem;
+  color: var(--fg-bright);
+}
+.chip {
+  font-size: 0.78rem;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  background: rgba(124, 58, 237, 0.35);
+  color: #E9D5FF;
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  font-weight: 600;
+}
+.dg {
+  display: grid;
+  grid-template-columns: 165px 1fr;
+  min-height: 350px;
+}
+.chs {
+  padding: 14px 8px;
+  background: rgba(0, 0, 0, 0.28);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+.chs small {
+  color: var(--mut-dark);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 8px 10px 4px;
+  font-size: 0.7rem;
+}
+.chs button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--mut);
+  font: 500 0.92rem var(--font-body);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  position: relative;
+}
+.chs button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--fg);
+}
+.chs button[aria-pressed="true"] {
+  background: rgba(124, 58, 237, 0.35);
+  color: #fff;
+  font-weight: 600;
+}
+.chs em {
+  margin-left: auto;
+  font-style: normal;
+  font-size: 0.75rem;
+  color: var(--l-glow);
+  font-weight: 700;
+  background: rgba(132, 204, 22, 0.15);
+  padding: 1px 6px;
+  border-radius: 10px;
+}
+.pane {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  background: rgba(15, 14, 30, 0.5);
+}
+#msgs {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+  overflow-y: auto;
+  max-height: 240px;
+}
+.m {
+  display: flex;
+  gap: 12px;
+  animation: msgPop 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@keyframes msgPop {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.m p {
+  color: var(--fg);
+  font-size: 0.93rem;
+  line-height: 1.45;
+  margin-top: 2px;
+}
+.m-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.m b {
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+.m-time {
+  font-size: 0.72rem;
+  color: var(--mut-dark);
+}
+.av {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #000;
+  font-weight: 700;
+  flex-shrink: 0;
+  font-size: 0.95rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+.typing-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--mut);
+  height: 20px;
+}
+.typing-dots span {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--mut);
+  animation: dotBounce 1.2s infinite ease-in-out;
+}
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-4px); }
+}
+.roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.roles span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.roles span::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--k);
+  box-shadow: 0 0 8px var(--k);
+}
+
+/* ==========================================================================
+   BENTO FEATURES GRID
+   ========================================================================== */
+.sh {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.sh p {
+  max-width: 38em;
+  margin: 14px auto 0;
+  font-size: 1.05rem;
+}
+.eyebrow {
+  color: var(--l-glow);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+}
+.b1, .b2 { grid-column: span 3; }
+.b3, .b4, .b5 { grid-column: span 2; }
+
+.bento .card {
+  background: linear-gradient(160deg, color-mix(in srgb, var(--k) 18%, transparent), var(--card) 65%), var(--card);
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.bento .card:hover {
+  transform: translateY(-5px);
+  border-color: color-mix(in srgb, var(--k) 60%, transparent);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 25px color-mix(in srgb, var(--k) 30%, transparent);
+}
+
+.ic {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--k) 22%, transparent);
+  color: var(--k);
+  margin-bottom: 18px;
+  border: 1px solid color-mix(in srgb, var(--k) 45%, transparent);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--k) 25%, transparent);
+  transition: transform 0.3s ease;
+}
+.bento .card:hover .ic {
+  transform: scale(1.1) rotate(5deg);
+}
+.bento h3 {
+  margin-bottom: 10px;
+  color: var(--fg-bright);
+}
+.bento p {
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+/* Audio Waveform Equalizer */
+.eq {
+  display: flex;
+  gap: 5px;
+  align-items: flex-end;
+  height: 38px;
+  margin-top: 20px;
+}
+.eq i {
+  width: 6px;
+  height: 100%;
+  border-radius: 3px;
+  background: var(--k);
+  transform-origin: bottom;
+  animation: eqBounce 1s ease-in-out infinite alternate;
+}
+.eq i:nth-child(2) { animation-delay: -0.3s; height: 75%; }
+.eq i:nth-child(3) { animation-delay: -0.7s; height: 90%; }
+.eq i:nth-child(4) { animation-delay: -0.15s; height: 60%; }
+.eq i:nth-child(5) { animation-delay: -0.5s; height: 85%; }
+.eq i:nth-child(6) { animation-delay: -0.8s; height: 70%; }
+.eq i:nth-child(7) { animation-delay: -0.4s; height: 95%; }
+@keyframes eqBounce {
+  0% { transform: scaleY(0.2); }
+  100% { transform: scaleY(1); }
+}
+
+/* ==========================================================================
+   RULES & FAQ ACCORDIONS
+   ========================================================================== */
+.acc {
+  max-width: 840px;
+  margin: 0 auto;
+  display: grid;
+  gap: 14px;
+}
+.acc details {
+  padding: 0;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+.acc summary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 64px;
+  padding: 12px 24px;
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--fg-bright);
+  user-select: none;
+}
+.acc summary::-webkit-details-marker { display: none; }
+.acc summary .ic {
+  margin: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+}
+.acc .chev {
+  margin-left: auto;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  color: var(--mut);
+}
+.acc details[open] .chev {
+  transform: rotate(180deg);
+  color: var(--c-glow);
+}
+.acc details[open] {
+  border-color: rgba(124, 58, 237, 0.4);
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+}
+.acc details p {
+  padding: 0 24px 22px 82px;
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+.faq details p {
+  padding-left: 24px;
+}
+
+/* ==========================================================================
+   APPLICATION FORM (3-STEP WITH REALTIME FEEDBACK)
+   ========================================================================== */
+.form-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 38px;
+}
+#st {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--c-glow);
+  margin-bottom: 12px;
+}
+#st:focus { outline: none; }
+
+.track {
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.1);
+  margin-bottom: 30px;
+  overflow: hidden;
+  position: relative;
+}
+.track i {
+  display: block;
+  height: 100%;
+  width: 33.33%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--p), var(--c), var(--l));
+  transition: width 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 0 15px rgba(34, 211, 238, 0.6);
+}
+
+.stp {
+  display: grid;
+  gap: 24px;
+  border: 0;
+}
+.f {
+  display: grid;
+  gap: 8px;
+  border: 0;
+  min-width: 0;
+}
+.f > label, .f > legend {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--fg-bright);
+}
+.hint {
+  font-size: 0.85rem;
+  color: var(--mut);
+}
+.err {
+  color: #FDA4AF;
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.err:empty { display: none; }
+
+.fi {
+  width: 100%;
+  min-height: 50px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background: rgba(11, 10, 24, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--fg-bright);
+  font: inherit;
+  transition: all 0.25s ease;
+}
+.fi:focus {
+  border-color: var(--c-glow);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.25), 0 0 15px rgba(34, 211, 238, 0.2);
+  outline: none;
+}
+.fi option {
+  background: #151428;
+  color: #fff;
+}
+textarea.fi {
+  resize: vertical;
+  min-height: 140px;
+  line-height: 1.5;
+}
+.bad .fi {
+  border-color: var(--r);
+  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.2);
+  animation: shake 0.4s ease;
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.pill {
+  position: relative;
+  cursor: pointer;
+}
+.pill input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.pill span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.05);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.pill:hover span {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+.pill input:checked + span {
+  background: var(--k, #A78BFA);
+  color: #000;
+  font-weight: 700;
+  border-color: transparent;
+  box-shadow: 0 0 20px color-mix(in srgb, var(--k, #A78BFA) 75%, transparent);
+  transform: scale(1.02);
+}
+
+.cnt {
+  text-align: right;
+  font-size: 0.85rem;
+  color: var(--mut);
+  font-family: var(--font-mono);
+}
+
+.chk {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  cursor: pointer;
+  min-height: 44px;
+  user-select: none;
+}
+.chk input {
+  width: 22px;
+  height: 22px;
+  margin-top: 3px;
+  accent-color: var(--p-glow);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.form-nav {
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.form-nav .btn:last-child {
+  margin-left: auto;
+}
+
+#sum {
+  border: 1px solid var(--r);
+  background: rgba(244, 63, 94, 0.12);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  animation: shake 0.4s ease;
+}
+#sum:focus { outline: 2px solid var(--c-glow); }
+#sum ul {
+  margin-top: 8px;
+  display: grid;
+  gap: 6px;
+}
+#sum a {
+  color: #FDA4AF;
+  text-decoration: underline;
+  font-size: 0.92rem;
+}
+
+/* ==========================================================================
+   MODALS (SUCCESS & DIRECT JOIN & SETUP)
+   ========================================================================== */
+dialog {
+  border: 0;
+  background: transparent;
+  color: var(--fg);
+  width: min(500px, 92vw);
+  overflow: visible;
+  margin: auto;
+}
+dialog::backdrop {
+  background: rgba(5, 5, 12, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+dialog .card {
+  text-align: center;
+  padding: 38px 30px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(124, 58, 237, 0.3);
+}
+
+#cf {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.modal-icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--l-glow);
+  color: #000;
+  box-shadow: 0 0 35px rgba(163, 230, 53, 0.6);
+  animation: pulseBeacon 2s infinite ease-in-out;
+}
+.modal-icon.discord-color {
+  background: #5865F2;
+  color: #fff;
+  box-shadow: 0 0 35px rgba(88, 101, 242, 0.6);
+}
+
+.idbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px dashed rgba(255, 255, 255, 0.25);
+}
+.idbox code {
+  font: 700 1.3rem var(--font-mono);
+  letter-spacing: 0.08em;
+  color: var(--c-glow);
+}
+
+/* Setup Admin Gear Pill */
+.config-pill {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--radius-full);
+  background: rgba(17, 17, 36, 0.9);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--bd);
+  color: var(--fg);
+  font-size: 0.88rem;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.config-pill:hover {
+  border-color: var(--c-glow);
+  color: var(--c-glow);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+footer {
+  padding: 56px 0 64px;
+  border-top: 1px solid var(--bd);
+  background: rgba(6, 6, 14, 0.7);
+}
+.fg {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  justify-content: space-between;
+  align-items: center;
+}
+.soc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.soc a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--bd);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+.soc a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--c-glow);
+  color: var(--c-glow);
+  transform: translateY(-2px);
+}
+.fine {
+  font-size: 0.88rem;
+  margin-top: 30px;
+  color: var(--mut-dark);
+}
+
+/* ==========================================================================
+   RESPONSIVENESS & ACCESSIBILITY
+   ========================================================================== */
+@media (max-width: 960px) {
+  .hero { grid-template-columns: 1fr; }
+  .nav-center { display: none; }
+  .bento { grid-template-columns: 1fr 1fr; }
+  .b1, .b2, .b5 { grid-column: span 2; }
+  .b3, .b4 { grid-column: span 1; }
+}
+
+@media (max-width: 680px) {
+  .hero { padding-top: 24px; }
+  .lt { display: none; }
+  section { padding: 60px 0; }
+  .bento { grid-template-columns: 1fr; }
+  .b1, .b2, .b3, .b4, .b5 { grid-column: auto; }
+  .dg { grid-template-columns: 1fr; }
+  .chs { flex-direction: row; flex-wrap: wrap; border-right: 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .chs small { display: none; }
+  .form-wrapper { padding: 22px; }
+  .hero-stats { justify-content: space-between; }
+  .acc details p { padding-left: 24px; }
+}
+
+@media (max-width: 420px) {
+  .live { display: none; }
+}
+
+/* ==========================================================================
+   GLITCH & GLITTER MOUSE & FLYING WORD EFFECTS
+   ========================================================================== */
+.click-ripple {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%) scale(0);
+  border: 2px solid var(--c-glow);
+  box-shadow: 0 0 20px var(--c-glow), inset 0 0 15px var(--m-glow);
+  animation: ripplePop 0.55s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+
+@keyframes ripplePop {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+  }
+  60% {
+    opacity: 0.8;
+    border-color: var(--m-glow);
+    box-shadow: 0 0 25px var(--m-glow), inset 0 0 20px var(--c-glow);
+  }
+  100% {
+    width: 90px;
+    height: 90px;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.6) rotate(45deg);
+  }
+}
+
+/* Flying Word / Letter Particle */
+.flying-fragment {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99998;
+  font-family: var(--font-display), var(--font-body);
+  font-weight: 700;
+  user-select: none;
+  color: #fff;
+  text-shadow: 0 0 12px var(--c-glow), 0 0 24px var(--m-glow);
+  will-change: transform, opacity;
+}
+
+/* Sparkle / Glitter Star Particle */
+.glitter-spark {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+  user-select: none;
+  line-height: 1;
+  text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+  will-change: transform, opacity;
+}
+
+/* Glitch Flicker on Original Clicked Element */
+.word-glitch {
+  animation: wordGlitchAnim 0.35s ease;
+}
+@keyframes wordGlitchAnim {
+  0% { transform: scale(1); filter: none; }
+  25% { transform: scale(1.04) skewX(-3deg); text-shadow: 2px 0 var(--c-glow), -2px 0 var(--m-glow); }
+  50% { transform: scale(0.98) skewX(2deg); text-shadow: -2px 0 var(--l-glow), 2px 0 var(--r); }
+  75% { transform: scale(1.02) skewX(-1deg); }
+  100% { transform: scale(1) skewX(0); filter: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .rv { opacity: 1 !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#apply">Skip to application</a>
+
+<!-- SVG Icon Symbols Library -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+<symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></symbol>
+<symbol id="i-pad" viewBox="0 0 24 24"><path d="M6 12h4M8 10v4M15 13h.01M18 11h.01"/><rect width="20" height="12" x="2" y="6" rx="2"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+<symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></symbol>
+<symbol id="i-cup" viewBox="0 0 24 24"><path d="M10 2v2M14 2v2M6 2v2M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7Z"/></symbol>
+<symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.6 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1.2 1.2 0 0 1 1.5 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"/></symbol>
+<symbol id="i-hash" viewBox="0 0 24 24"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></symbol>
+<symbol id="i-mega" viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 14zM11.6 16.8a3 3 0 1 1-5.8-1.6"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+<symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></symbol>
+<symbol id="i-discord" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></symbol>
+<symbol id="i-volume" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></symbol>
+<symbol id="i-mute" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></symbol>
+<symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+<symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4M3 5h4M19 17v4M17 19h4"/></symbol>
+</defs>
+</svg>
+
+<!-- Background Canvas & Ambience -->
+<canvas id="fx" aria-hidden="true"></canvas>
+<div class="ambient-grid" aria-hidden="true"></div>
+<div class="orb orb-1" aria-hidden="true"></div>
+<div class="orb orb-2" aria-hidden="true"></div>
+<div class="orb orb-3" aria-hidden="true"></div>
+
+<!-- Top Navigation -->
+<header>
+  <div class="w">
+    <nav class="bar" aria-label="Main Navigation">
+      <a class="logo" href="#top">
+        <span class="badge" aria-hidden="true">R</span>
+        <span class="logo-text">Rehan Server</span>
+      </a>
+
+      <ul class="nav-center">
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#rules">Rules</a></li>
+        <li><a href="#apply">Apply</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- SFX Audio Toggle Button -->
+        <button type="button" class="icon-btn active" id="sfx-toggle" title="Toggle UI Sound Effects" aria-label="Toggle UI Sound Effects">
+          <svg class="i" id="sfx-icon"><use href="#i-volume"/></svg>
+        </button>
+
+        <!-- Live Server Status Indicator -->
+        <span class="live" title="Members currently active">
+          <span class="live-dot" aria-hidden="true"></span>
+          <span><b id="mc">2</b> <span class="lt">Online</span></span>
+        </span>
+
+        <!-- Direct Join Discord CTA -->
+        <button type="button" class="btn discord-btn" id="header-join-btn">
+          <svg class="i"><use href="#i-discord"/></svg>
+          <span>Join Server</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ==================== HERO SECTION ==================== -->
+  <section id="about" class="w hero">
+    <div class="hero-left">
+      <p class="pillbadge">
+        <svg class="i"><use href="#i-sparkles"/></svg>
+        <span>Official Community Hub &bull; Applications Open</span>
+      </p>
+      <h1>Your new <span class="grad">favorite corner</span> of Discord.</h1>
+      <p class="lead">
+        Welcome to <strong>Rehan Server</strong> — a premier, high-energy gaming and chill community.
+        Drop into voice chats, compete in tournaments, win nitro giveaways, and vibe with members who actually stick around.
+      </p>
+      
+      <div class="hero-actions">
+        <button type="button" class="btn discord-btn" id="hero-direct-join">
+          <svg class="i"><use href="#i-discord"/></svg>
+          <span>Join Discord Server</span>
+        </button>
+        <a class="btn pri" href="#apply">
+          <svg class="i"><use href="#i-bolt"/></svg>
+          <span>Apply for Whitelist</span>
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat-item">
+          <b id="stat-members">7</b>
+          <span>Server Members</span>
+        </div>
+        <div class="hero-stat-item">
+          <b id="stat-online">2</b>
+          <span>Online Now</span>
+        </div>
+        <div class="hero-stat-item">
+          <b>Est. Aug 2026</b>
+          <span>Soundboard &amp; Voice</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Discord Mock Chat -->
+    <div class="hero-right">
+      <div class="card disc holo-card tilt rv" aria-label="Interactive RehanServer preview">
+        <div class="dh">
+          <span class="badge" aria-hidden="true">R</span>
+          <b>RehanServer</b>
+          <span class="chip">Est. Aug 2026</span>
+        </div>
+
+        <div class="dg">
+          <!-- Channels list -->
+          <div class="chs" role="group" aria-label="Preview channels">
+            <small>TEXT CHANNELS</small>
+            <button aria-pressed="true" data-c="general"><svg class="i"><use href="#i-hash"/></svg>general</button>
+            <button aria-pressed="false" data-c="welcome"><svg class="i"><use href="#i-hash"/></svg>welcome</button>
+            <button aria-pressed="false" data-c="events"><svg class="i"><use href="#i-hash"/></svg>events</button>
+            <small>VOICE CHANNELS</small>
+            <button aria-pressed="false" data-c="lounge"><svg class="i"><use href="#i-mic"/></svg>Voice Lounge<em>2</em></button>
+          </div>
+
+          <!-- Message Pane -->
+          <div class="pane">
+            <div id="msgs" aria-live="polite"></div>
+            
+            <div class="typing-box" id="typing-box">
+              <span class="typing-dots"><span></span><span></span><span></span></span>
+              <span id="typing-text">Rehan is typing...</span>
+            </div>
+
+            <div class="roles" aria-label="Server Roles">
+              <span style="--k:#FB7185">Founder &bull; Rehan</span>
+              <span style="--k:#22D3EE">Moderators</span>
+              <span style="--k:#A3E635">Elite Gamers</span>
+              <span style="--k:#E879F9">Creators</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== BENTO FEATURES ==================== -->
+  <section id="features">
+    <div class="w">
+      <div class="sh rv">
+        <p class="eyebrow">Why Join Rehan Server</p>
+        <h2>Built for people who love to hang out</h2>
+        <p>Whether you play competitive titles, create content, or just want late-night conversations.</p>
+      </div>
+
+      <div class="bento">
+        <!-- Bento 1: Active Voice -->
+        <article class="card holo-card tilt rv b1" style="--k:#22D3EE">
+          <span class="ic"><svg class="i"><use href="#i-mic"/></svg></span>
+          <h3>Active Voice Lounges</h3>
+          <p>Voice rooms stay alive day and night with lo-fi music, screen shares, and casual conversation. Drop in anytime with high-bitrate 384kbps audio.</p>
+          <div class="eq" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </div>
+        </article>
+
+        <!-- Bento 2: Gaming & Tournaments -->
+        <article class="card holo-card tilt rv b2" style="--k:#E879F9;--d:.08s">
+          <span class="ic"><svg class="i"><use href="#i-pad"/></svg></span>
+          <h3>Weekly Gaming &amp; Events</h3>
+          <p>Scheduled tournaments in Valorant, CS2, Minecraft, Roblox, and party games. Play with dedicated squads or join community custom matches.</p>
+        </article>
+
+        <!-- Bento 3: Friendly Staff -->
+        <article class="card holo-card tilt rv b3" style="--k:#A3E635;--d:.16s">
+          <span class="ic"><svg class="i"><use href="#i-users"/></svg></span>
+          <h3>Friendly &amp; Fair Staff</h3>
+          <p>Responsive moderators keep the environment drama-free and welcoming without ruining the fun.</p>
+        </article>
+
+        <!-- Bento 4: Giveaways -->
+        <article class="card holo-card tilt rv b4" style="--k:#FBBF24;--d:.24s">
+          <span class="ic"><svg class="i"><use href="#i-gift"/></svg></span>
+          <h3>Discord Nitro &amp; Giveaways</h3>
+          <p>Monthly Discord Nitro, game keys, Steam gift cards, and exclusive custom roles for active members.</p>
+        </article>
+
+        <!-- Bento 5: Chill Hangout -->
+        <article class="card holo-card tilt rv b5" style="--k:#A78BFA;--d:.32s">
+          <span class="ic"><svg class="i"><use href="#i-cup"/></svg></span>
+          <h3>Chill Vibes &amp; Custom Bots</h3>
+          <p>Level progression, music bots, custom soundboards, economy mini-games, and quiet study/work channels.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SERVER RULES ==================== -->
+  <section id="rules">
+    <div class="w">
+      <div class="sh rv">
+        <p class="eyebrow">Community Standards</p>
+        <h2>Rehan Server Rules</h2>
+        <p>Please review these before applying. These rules protect everyone in the community.</p>
+      </div>
+
+      <div class="acc rv">
+        <details class="card holo-card" name="rules-acc" open>
+          <summary>
+            <span class="ic" style="--k:#FB7185"><svg class="i"><use href="#i-heart"/></svg></span>
+            <span>1. Be Respectful &amp; Friendly</span>
+            <svg class="i chev"><use href="#i-chev"/></svg>
+          </summary>
+          <p>Treat all members with kindness. Harassment, racism, slurs, toxicity, personal attacks, and hate speech result in an immediate ban. Disagree with respect.</p>
+        </details>
+
+        <details class="card holo-card" name="rules-acc">
+          <summary>
+            <span class="ic" style="--k:#FBBF24"><svg class="i"><use href="#i-ban"/></svg></span>
+            <span>2. No Spam, Unsolicited DMs, or Self-Promotion</span>
+            <svg class="i chev"><use href="#i-chev"/></svg>
+          </summary>
+          <p>Do not send unsolicited server invites or advertise in members' private DMs. Use designated <code>#self-promo</code> or creator channels for sharing content.</p>
+        </details>
+
+        <details class="card holo-card" name="rules-acc">
+          <summary>
+            <span class="ic" style="--k:#A3E635"><svg class="i"><use href="#i-shield"/></svg></span>
+            <span>3. Safe &amp; Age-Appropriate (13+ Discord ToS)</span>
+            <svg class="i chev"><use href="#i-chev"/></svg>
+          </summary>
+          <p>All members must be 13 or older per Discord's Terms of Service. Absolutely no NSFW, gore, doxxing, cheating tools, or illegal content.</p>
+        </details>
+
+        <details class="card holo-card" name="rules-acc">
+          <summary>
+            <span class="ic" style="--k:#22D3EE"><svg class="i"><use href="#i-hash"/></svg></span>
+            <span>4. Keep Channels Organized &amp; Respect Voice Lounges</span>
+            <svg class="i chev"><use href="#i-chev"/></svg>
+          </summary>
+          <p>Post content in its appropriate channel. Avoid mic spam, high-pitched screamers, or soundboard flooding in public voice rooms.</p>
+        </details>
+
+        <details class="card holo-card" name="rules-acc">
+          <summary>
+            <span class="ic" style="--k:#E879F9"><svg class="i"><use href="#i-mega"/></svg></span>
+            <span>5. Listen to Staff &amp; Moderator Decisions</span>
+            <svg class="i chev"><use href="#i-chev"/></svg>
+          </summary>
+          <p>Staff members ensure the community remains safe. If you have an issue with a moderator's decision, open a support ticket or DM an admin privately.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== APPLICATION FORM ==================== -->
+  <section id="apply">
+    <div class="w">
+      <div class="sh rv">
+        <p class="eyebrow">Join the Family</p>
+        <h2>Apply to Join Rehan Server</h2>
+        <p>Complete 3 quick steps to verify your profile and join the Discord community.</p>
+      </div>
+
+      <div class="card form-wrapper holo-card rv">
+        <p id="st" tabindex="-1" aria-live="polite">Step 1 of 3 • Profile Information</p>
+        
+        <div class="track" aria-hidden="true">
+          <i id="bar"></i>
+        </div>
+
+        <div id="sum" role="alert" tabindex="-1" hidden>
+          <strong>Please resolve the following before continuing:</strong>
+          <ul></ul>
+        </div>
+
+        <form id="f" novalidate>
+          <!-- STEP 1 -->
+          <div class="stp" data-s="0">
+            <div class="f" data-f="user">
+              <label for="user">Discord Username</label>
+              <input class="fi" id="user" name="user" placeholder="@username (e.g. @rehan_01)" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="h-user e-user">
+              <p class="hint" id="h-user">Your unique Discord handle (2 to 32 characters, lowercase, numbers, underscores, or periods).</p>
+              <p class="err" id="e-user"></p>
+            </div>
+
+            <fieldset class="f" data-f="age" aria-describedby="e-age">
+              <legend>Age Bracket</legend>
+              <div class="pills">
+                <label class="pill" style="--k:#F43F5E"><input type="radio" name="age" value="u13"><span>Under 13</span></label>
+                <label class="pill" style="--k:#22D3EE"><input type="radio" name="age" value="13-15"><span>13–15</span></label>
+                <label class="pill" style="--k:#A3E635"><input type="radio" name="age" value="16-17"><span>16–17</span></label>
+                <label class="pill" style="--k:#E879F9"><input type="radio" name="age" value="18-24"><span>18–24</span></label>
+                <label class="pill" style="--k:#FBBF24"><input type="radio" name="age" value="25+"><span>25+</span></label>
+              </div>
+              <p class="err" id="e-age"></p>
+            </fieldset>
+
+            <div class="f" data-f="src">
+              <label for="src">How did you find Rehan Server?</label>
+              <select class="fi" id="src" name="src" aria-describedby="e-src">
+                <option value="">Select an option...</option>
+                <option value="Friend Referral">Invited by a friend</option>
+                <option value="YouTube">YouTube</option>
+                <option value="TikTok">TikTok</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Discord Discovery / Disboard">Discord Discovery / Disboard</option>
+                <option value="Other">Other Community</option>
+              </select>
+              <p class="err" id="e-src"></p>
+            </div>
+          </div>
+
+          <!-- STEP 2 -->
+          <div class="stp" data-s="1" hidden>
+            <fieldset class="f" data-f="int" aria-describedby="e-int">
+              <legend>Your Interests &amp; Roles to Claim</legend>
+              <div class="pills">
+                <label class="pill" style="--k:#22D3EE"><input type="checkbox" name="int" value="Gaming Squads"><span>🎮 Gaming Squads</span></label>
+                <label class="pill" style="--k:#E879F9"><input type="checkbox" name="int" value="Casual Chatting"><span>💬 Casual Chatting</span></label>
+                <label class="pill" style="--k:#A3E635"><input type="checkbox" name="int" value="Community Events"><span>🏆 Community Events</span></label>
+                <label class="pill" style="--k:#FBBF24"><input type="checkbox" name="int" value="Giveaways"><span>🎁 Giveaways &amp; Nitro</span></label>
+                <label class="pill" style="--k:#FB7185"><input type="checkbox" name="int" value="Content Creator"><span>🎥 Content Creator</span></label>
+                <label class="pill" style="--k:#A78BFA"><input type="checkbox" name="int" value="Coding & Tech"><span>💻 Coding &amp; Tech</span></label>
+              </div>
+              <p class="err" id="e-int"></p>
+            </fieldset>
+
+            <div class="f" data-f="intro">
+              <label for="intro">Tell us about yourself &amp; why you want to join</label>
+              <textarea class="fi" id="intro" name="intro" maxlength="400" placeholder="Mention your favorite games, hobbies, timezone, or what you're excited to do in Rehan Server!" aria-describedby="e-intro cnt"></textarea>
+              <div class="cnt" id="cnt">0 / 400 (minimum 25 characters)</div>
+              <p class="err" id="e-intro"></p>
+            </div>
+          </div>
+
+          <!-- STEP 3 -->
+          <div class="stp" data-s="2" hidden>
+            <div class="f" data-f="rules">
+              <label class="chk">
+                <input type="checkbox" name="rules" id="rules-check" aria-describedby="e-rules">
+                <span>I have read the <a href="#rules" style="color:var(--c-glow);text-decoration:underline;">Server Rules</a>, understand Discord's Terms of Service, and promise to keep Rehan Server a friendly and respectful space.</span>
+              </label>
+              <p class="err" id="e-rules"></p>
+            </div>
+
+            <div class="card" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.08);padding:18px;margin-top:10px;">
+              <h4 style="font-size:1.05rem;color:var(--fg-bright);margin-bottom:6px;">Application Review Process</h4>
+              <p style="font-size:0.92rem;">Once submitted, your application is logged in our staff channel. You will immediately receive your Discord server join pass on the next screen!</p>
+            </div>
+          </div>
+
+          <!-- Navigation Buttons -->
+          <div class="form-nav">
+            <button type="button" class="btn sec" id="bk" hidden>
+              <svg class="i" style="transform:rotate(180deg)"><use href="#i-chev"/></svg>
+              <span>Back</span>
+            </button>
+            <button type="button" class="btn pri" id="nx">
+              <span>Continue</span>
+              <svg class="i"><use href="#i-chev"/></svg>
+            </button>
+            <button type="submit" class="btn pri" id="sb" hidden>
+              <svg class="i"><use href="#i-check"/></svg>
+              <span>Submit &amp; Get Discord Invite</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FAQ ==================== -->
+  <section id="faq">
+    <div class="w">
+      <div class="sh rv">
+        <p class="eyebrow">Frequently Asked</p>
+        <h2>Got Questions?</h2>
+      </div>
+
+      <div class="acc faq rv">
+        <details class="card holo-card" name="faq-acc" open>
+          <summary>
+            <span>Can I join immediately or do I have to apply?</span>
+            <svg class="i chev"><use href="#i-chev"/></svg>
+          </summary>
+          <p>You can join immediately using the <strong>"Join Server"</strong> button above! The application form gives you prioritized member roles, access to exclusive channels, and whitelist status for giveaways and tournaments.</p>
+        </details>
+
+        <details class="card holo-card" name="faq-acc">
+          <summary>
+            <span>Is joining Rehan Server completely free?</span>
+            <svg class="i chev"><use href="#i-chev"/></svg>
+          </summary>
+          <p>Yes, 100% free! All voice channels, public chat lounges, and community tournaments are open to all members.</p>
+        </details>
+
+        <details class="card holo-card" name="faq-acc">
+          <summary>
+            <span>What games does the community play most?</span>
+            <svg class="i chev"><use href="#i-chev"/></svg>
+          </summary>
+          <p>Our members play Valorant, CS2, Minecraft, Roblox, Grand Theft Auto V, Fortnite, Apex Legends, Among Us, and various indie party titles.</p>
+        </details>
+
+        <details class="card holo-card" name="faq-acc">
+          <summary>
+            <span>How do I contact server staff or Rehan?</span>
+            <svg class="i chev"><use href="#i-chev"/></svg>
+          </summary>
+          <p>Once you are in the server, you can create a private ticket in the <code>#support-tickets</code> channel or message any active Moderator.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer>
+  <div class="w">
+    <div class="fg">
+      <a class="logo" href="#top">
+        <span class="badge" aria-hidden="true">R</span>
+        <span class="logo-text">Rehan Server</span>
+      </a>
+
+      <div class="soc">
+        <a href="https://discord.gg/S3hRFfxM8" class="direct-dc-link" target="_blank" rel="noopener">
+          <svg class="i"><use href="#i-discord"/></svg>
+          <span>Discord Server</span>
+        </a>
+        <a href="https://youtube.com/@Rehan" target="_blank" rel="noopener">
+          <span>YouTube</span>
+        </a>
+        <a href="https://tiktok.com/@Rehan" target="_blank" rel="noopener">
+          <span>TikTok</span>
+        </a>
+      </div>
+    </div>
+    
+    <p class="fine">
+      &copy; 2026 Rehan Server. Created with passion for our community. Not affiliated with or endorsed by Discord Inc.
+    </p>
+  </div>
+</footer>
+
+<!-- ==================== SUCCESS CELEBRATION MODAL ==================== -->
+<dialog id="ok" aria-labelledby="okt">
+  <div class="card holo-card">
+    <div class="modal-icon">
+      <svg class="i" style="width:38px;height:38px;"><use href="#i-check"/></svg>
+    </div>
+    <h2 id="okt" tabindex="-1">Welcome to Rehan Server!</h2>
+    <p style="margin-top:10px;">
+      Your application has been received and logged. Click below to join the Discord server right now!
+    </p>
+
+    <div class="idbox">
+      <code id="aid">RS-0000-0000</code>
+      <button type="button" class="btn sec" id="cp" title="Copy ID">
+        <svg class="i"><use href="#i-copy"/></svg>
+        <span id="cpm">Copy</span>
+      </button>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:12px;margin-top:20px;">
+      <a href="https://discord.gg/S3hRFfxM8" class="btn discord-btn direct-dc-link" id="modal-join-dc-btn" target="_blank" rel="noopener">
+        <svg class="i"><use href="#i-discord"/></svg>
+        <span>Enter Rehan Server Now</span>
+      </a>
+      <button type="button" class="btn sec" onclick="document.getElementById('ok').close()">
+        Close
+      </button>
+    </div>
+  </div>
+</dialog>
+
+<!-- ==================== DIRECT JOIN POPUP MODAL ==================== -->
+<dialog id="direct-join-modal" aria-labelledby="dj-title">
+  <div class="card holo-card">
+    <div class="modal-icon discord-color">
+      <svg class="i" style="width:38px;height:38px;"><use href="#i-discord"/></svg>
+    </div>
+    <h2 id="dj-title">Join Rehan Server</h2>
+    <p style="margin-top:10px;">
+      You're invited to join Rehan Server on Discord. Meet thousands of gamers and chatters!
+    </p>
+
+    <div style="margin:20px 0;padding:16px;border-radius:var(--radius-md);background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-around;">
+      <div>
+        <b style="font-size:1.3rem;color:var(--l-glow);display:block;" id="modal-online-count">2</b>
+        <span style="font-size:0.8rem;color:var(--mut);">Online Now</span>
+      </div>
+      <div>
+        <b style="font-size:1.3rem;color:var(--c-glow);display:block;" id="modal-total-count">7</b>
+        <span style="font-size:0.8rem;color:var(--mut);">Members</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <a href="https://discord.gg/S3hRFfxM8" class="btn discord-btn direct-dc-link" id="popup-join-btn" target="_blank" rel="noopener">
+        <svg class="i"><use href="#i-discord"/></svg>
+        <span>Accept Invite &amp; Join</span>
+      </a>
+      <button type="button" class="btn sec" onclick="document.getElementById('direct-join-modal').close()">
+        Maybe Later
+      </button>
+    </div>
+  </div>
+</dialog>
+
+<!-- ==================== REHAN ADMIN QUICK-SETUP PILL & MODAL ==================== -->
+<button type="button" class="config-pill" id="open-config" title="Configure Discord Invite & Webhook">
+  <svg class="i"><use href="#i-gear"/></svg>
+  <span>Discord Setup</span>
+</button>
+
+<dialog id="config-modal" aria-labelledby="cfg-title">
+  <div class="card holo-card" style="text-align:left;">
+    <h2 id="cfg-title" style="font-size:1.4rem;margin-bottom:8px;">Discord Server Settings</h2>
+    <p style="font-size:0.9rem;margin-bottom:20px;">
+      Set your Discord Invite link and Webhook URL. These are saved in your browser's storage so anyone clicking "Join" goes straight to your real server!
+    </p>
+
+    <form id="config-form" style="display:grid;gap:16px;">
+      <div>
+        <label for="cfg-invite" style="font-weight:700;font-size:0.92rem;display:block;margin-bottom:6px;">Your Discord Invite Link</label>
+        <input class="fi" id="cfg-invite" value="https://discord.gg/S3hRFfxM8" placeholder="https://discord.gg/S3hRFfxM8">
+      </div>
+      <div>
+        <label for="cfg-webhook" style="font-weight:700;font-size:0.92rem;display:block;margin-bottom:6px;">Discord Webhook URL (For Application Alerts)</label>
+        <input class="fi" id="cfg-webhook" placeholder="https://discord.com/api/webhooks/...">
+        <p class="hint" style="margin-top:4px;">Paste the staff webhook from Server Settings &gt; Integrations &gt; Webhooks</p>
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:14px;">
+        <button type="button" class="btn sec" onclick="document.getElementById('config-modal').close()">Cancel</button>
+        <button type="submit" class="btn pri">Save Settings</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<!-- Confetti Canvas -->
+<canvas id="cf" aria-hidden="true"></canvas>
+
+<!-- ==========================================================================
+     CORE JAVASCRIPT & INTERACTIVE LOGIC
+     ========================================================================== -->
+<script>
+/* ==========================================================================
+   CONFIG: EDIT OR USE THE "Discord Setup" BUTTON ON SCREEN!
+   ========================================================================== */
+let savedInvite = localStorage.getItem('rehan_discord_invite');
+if (!savedInvite || savedInvite.includes('/rehan') || savedInvite.includes('yourcode')) {
+  savedInvite = 'https://discord.gg/S3hRFfxM8';
+  localStorage.setItem('rehan_discord_invite', savedInvite);
+}
+
+let CONFIG = {
+  // Real Discord Invite Link
+  invite: savedInvite,
+  // Discord Webhook URL for receiving applications
+  webhookUrl: localStorage.getItem('rehan_discord_webhook') || '',
+  // Sound FX enabled by default
+  sfxEnabled: localStorage.getItem('rehan_sfx') !== 'false'
+};
+
+const $ = (s, e = document) => e.querySelector(s);
+const $$ = (s, e = document) => [...e.querySelectorAll(s)];
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Update all Discord join links across the page
+function updateInviteLinks() {
+  const currentInvite = CONFIG.invite || 'https://discord.gg/S3hRFfxM8';
+  $$('.direct-dc-link, [data-invite]').forEach(el => {
+    el.href = currentInvite;
+    el.target = '_blank';
+    el.rel = 'noopener';
+    el.onclick = (e) => {
+      playSfx('click');
+    };
+  });
+}
+updateInviteLinks();
+
+/* ==========================================================================
+   BUILT-IN WEB AUDIO SYNTHESIZER FOR SOUND EFFECTS (ZERO EXTERNAL FILES)
+   ========================================================================== */
+let audioCtx = null;
+function getAudioContext() {
+  if (!audioCtx) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (AudioContext) audioCtx = new AudioContext();
+  }
+  if (audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  return audioCtx;
+}
+
+function playSfx(type) {
+  if (!CONFIG.sfxEnabled) return;
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const now = ctx.currentTime;
+
+    if (type === 'hover') {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(420, now);
+      osc.frequency.exponentialRampToValueAtTime(780, now + 0.05);
+      gain.gain.setValueAtTime(0.02, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.05);
+    } else if (type === 'click') {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(540, now);
+      osc.frequency.exponentialRampToValueAtTime(280, now + 0.09);
+      gain.gain.setValueAtTime(0.05, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.09);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.09);
+    } else if (type === 'next') {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(350, now);
+      osc.frequency.exponentialRampToValueAtTime(650, now + 0.12);
+      gain.gain.setValueAtTime(0.06, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.12);
+    } else if (type === 'fanfare') {
+      // Success chord
+      [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now + i * 0.07);
+        gain.gain.setValueAtTime(0.06, now + i * 0.07);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.07 + 0.35);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + i * 0.07);
+        osc.stop(now + i * 0.07 + 0.35);
+      });
+    }
+  } catch (err) {
+    // Audio context may require explicit user gesture first
+  }
+}
+
+// SFX Toggle button logic
+const sfxBtn = $('#sfx-toggle');
+const sfxIcon = $('#sfx-icon');
+function updateSfxButton() {
+  if (CONFIG.sfxEnabled) {
+    sfxBtn.classList.add('active');
+    sfxIcon.innerHTML = '<use href="#i-volume"/>';
+    sfxBtn.title = "UI Sound Effects: ON (Click to mute)";
+  } else {
+    sfxBtn.classList.remove('active');
+    sfxIcon.innerHTML = '<use href="#i-mute"/>';
+    sfxBtn.title = "UI Sound Effects: OFF (Click to unmute)";
+  }
+}
+updateSfxButton();
+sfxBtn.onclick = () => {
+  CONFIG.sfxEnabled = !CONFIG.sfxEnabled;
+  localStorage.setItem('rehan_sfx', CONFIG.sfxEnabled);
+  updateSfxButton();
+  if (CONFIG.sfxEnabled) playSfx('click');
+};
+
+// Add subtle sound to buttons & pills
+$$('.btn, .pill, .chs button').forEach(el => {
+  el.addEventListener('mouseenter', () => playSfx('hover'), { passive: true });
+});
+
+/* ==========================================================================
+   PARTICLE CONSTELLATION & CURSOR INTERACTION CANVAS
+   ========================================================================== */
+(() => {
+  const cv = $('#fx');
+  const g = cv.getContext('2d');
+  const colors = ['#7C3AED', '#22D3EE', '#EC4899', '#A3E635'];
+  let particles = [];
+  let mx = -999, my = -999;
+
+  const resize = () => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    cv.width = window.innerWidth * dpr;
+    cv.height = window.innerHeight * dpr;
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const count = window.innerWidth < 768 ? 30 : 65;
+    particles = Array.from({ length: count }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      r: 1.2 + Math.random() * 2.6,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: -0.15 - Math.random() * 0.4,
+      c: colors[Math.floor(Math.random() * colors.length)],
+      a: 0.25 + Math.random() * 0.55
+    }));
+    if (RM) render();
+  };
+
+  function render() {
+    g.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+    // Draw connecting lines between nearby particles
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = dx * dx + dy * dy;
+        if (dist < 11000) {
+          g.beginPath();
+          g.moveTo(particles[i].x, particles[i].y);
+          g.lineTo(particles[j].x, particles[j].y);
+          g.strokeStyle = 'rgba(167, 139, 250, ' + (1 - dist / 11000) * 0.12 + ')';
+          g.lineWidth = 0.8;
+          g.stroke();
+        }
+      }
+    }
+
+    // Update & draw particles
+    for (const p of particles) {
+      if (!RM) {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // Mouse gravity / repulsion
+        const dx = p.x - mx;
+        const dy = p.y - my;
+        const d = dx * dx + dy * dy;
+        if (d < 18000) {
+          const factor = 1.8 / Math.sqrt(d + 1);
+          p.x += dx * factor;
+          p.y += dy * factor;
+        }
+
+        // Screen wrap
+        if (p.y < -15) { p.y = window.innerHeight + 15; p.x = Math.random() * window.innerWidth; }
+        if (p.x < -15) p.x = window.innerWidth + 15;
+        if (p.x > window.innerWidth + 15) p.x = -15;
+      }
+
+      g.globalAlpha = p.a;
+      g.fillStyle = p.c;
+      g.beginPath();
+      g.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      g.fill();
+    }
+  }
+
+  function loop() {
+    if (!RM) {
+      render();
+      requestAnimationFrame(loop);
+    }
+  }
+
+  window.addEventListener('pointermove', e => {
+    mx = e.clientX;
+    my = e.clientY;
+  }, { passive: true });
+
+  window.addEventListener('resize', resize);
+  resize();
+  loop();
+})();
+
+/* ==========================================================================
+   SCROLL REVEAL OBSERVER
+   ========================================================================== */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+$$('.rv').forEach(el => observer.observe(el));
+
+/* ==========================================================================
+   3D PERSPECTIVE CARD TILT EFFECT
+   ========================================================================== */
+if (!RM && matchMedia('(hover:hover)').matches) {
+  $$('.tilt').forEach(card => {
+    card.addEventListener('pointermove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+      card.style.setProperty('--ry', (x - 0.5) * 14 + 'deg');
+      card.style.setProperty('--rx', (0.5 - y) * 14 + 'deg');
+      card.style.setProperty('--mx', x * 100 + '%');
+      card.style.setProperty('--my', y * 100 + '%');
+    });
+    card.addEventListener('pointerleave', () => {
+      card.style.setProperty('--rx', '0deg');
+      card.style.setProperty('--ry', '0deg');
+    });
+  });
+}
+
+/* ==========================================================================
+   AUTHENTIC DISCORD CHAT & REAL-TIME STATS SYNC
+   ========================================================================== */
+const REHAN_AVATAR = "https://cdn.discordapp.com/avatars/1406918078855512114/82000bcc6a05a220fbeed1ae88cf755c.png";
+
+const CHANNELS = {
+  general: [
+    { name: 'Rehan', avatar: REHAN_AVATAR, color: '#4fe2ca', role: 'Founder', text: 'Welcome to RehanServer! Glad to have you all here.' },
+    { name: 'SquadMate', color: '#22D3EE', text: 'Hey Rehan! Excited for the gaming session tonight 🔥' },
+    { name: 'Rehan', avatar: REHAN_AVATAR, color: '#4fe2ca', role: 'Founder', text: 'Hop into voice when you are free, soundboard is ready!' }
+  ],
+  welcome: [
+    { name: 'Rehan', avatar: REHAN_AVATAR, color: '#4fe2ca', role: 'Founder', text: 'Welcome to RehanServer! Check out #rules and say hi in #general.' },
+    { name: 'Community Bot', color: '#FBBF24', text: '🎉 A new member just joined RehanServer! Give them a warm welcome.' }
+  ],
+  events: [
+    { name: 'Rehan', avatar: REHAN_AVATAR, color: '#4fe2ca', role: 'Founder', text: '📢 Weekend community gaming night announcement coming up in #general!' }
+  ],
+  lounge: [
+    { name: 'Voice Lounges', color: '#A78BFA', text: '🔊 Voice room active &bull; Soundboard enabled for community members.' }
+  ]
+};
+
+let currentChannel = 'general';
+const msgsBox = $('#msgs');
+const typingBox = $('#typing-box');
+const typingText = $('#typing-text');
+
+function renderMessages(channelKey) {
+  currentChannel = channelKey;
+  const list = CHANNELS[channelKey] || [];
+  msgsBox.innerHTML = list.map(m => `
+    <div class="m">
+      ${m.avatar 
+        ? `<img src="${m.avatar}" class="av" style="border: 2px solid ${m.color}; padding: 0; object-fit: cover; border-radius: 50%;" alt="${m.name}">`
+        : `<span class="av" style="background:${m.color}">${m.name[0]}</span>`
+      }
+      <div>
+        <div class="m-header">
+          <b style="color:${m.color}">${m.name}</b>
+          ${m.role ? `<span style="font-size:0.7rem;padding:1px 6px;border-radius:4px;background:rgba(79,226,202,0.2);color:#4fe2ca;font-weight:700;">${m.role}</span>` : ''}
+          <span class="m-time">Today at ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+        </div>
+        <p>${m.text}</p>
+      </div>
+    </div>
+  `).join('');
+  msgsBox.scrollTop = msgsBox.scrollHeight;
+}
+
+// Channel click handler
+$$('.chs button').forEach(btn => {
+  btn.onclick = () => {
+    $$('.chs button').forEach(b => b.setAttribute('aria-pressed', b === btn));
+    playSfx('click');
+    renderMessages(btn.dataset.c);
+  };
+});
+renderMessages('general');
+
+// Dynamic typing simulation with Rehan
+setInterval(() => {
+  typingText.textContent = `Rehan is typing...`;
+  typingBox.style.opacity = '1';
+  setTimeout(() => {
+    typingBox.style.opacity = '0';
+  }, 2400);
+}, 6000);
+
+// REAL-TIME AUTO-SYNC WITH DISCORD SERVER API
+async function syncDiscordStats() {
+  try {
+    const res = await fetch('https://discord.com/api/v9/invites/S3hRFfxM8?with_counts=true');
+    if (res.ok) {
+      const data = await res.json();
+      const online = data.approximate_presence_count || 2;
+      const total = data.approximate_member_count || 7;
+      
+      if ($('#mc')) $('#mc').textContent = online;
+      if ($('#stat-online')) $('#stat-online').textContent = online;
+      if ($('#modal-online-count')) $('#modal-online-count').textContent = online;
+      if ($('#stat-members')) $('#stat-members').textContent = total;
+      if ($('#modal-total-count')) $('#modal-total-count').textContent = total;
+    }
+  } catch (err) {
+    console.debug('Discord sync active fallback:', err);
+  }
+}
+syncDiscordStats();
+setInterval(syncDiscordStats, 20000);
+
+/* ==========================================================================
+   DIRECT JOIN MODAL POPUP
+   ========================================================================== */
+const directJoinModal = $('#direct-join-modal');
+$('#header-join-btn').onclick = () => {
+  playSfx('click');
+  directJoinModal.showModal();
+};
+$('#hero-direct-join').onclick = () => {
+  playSfx('click');
+  directJoinModal.showModal();
+};
+
+/* ==========================================================================
+   APPLICATION FORM VALIDATION & STEPPING LOGIC
+   ========================================================================== */
+const form = $('#f');
+const STEPS_FIELDS = [
+  ['user', 'age', 'src'],
+  ['int', 'intro'],
+  ['rules']
+];
+const STEP_TITLES = ['Profile Information', 'Interests & Vibe', 'Rules & Confirmation'];
+let currentStep = 0;
+
+const GETTERS = {
+  user: () => form.elements.user.value.trim(),
+  age: () => form.elements.age.value,
+  src: () => form.elements.src.value,
+  int: () => $$('[name=int]:checked', form).length,
+  intro: () => form.elements.intro.value.trim().length,
+  rules: () => form.elements.rules.checked
+};
+
+const RULES = {
+  user: v => /^@?[a-z0-9_.]{2,32}$/i.test(v) || 'Enter your Discord username (e.g. @rehan_01 or rehan)',
+  age: v => !v ? 'Please select your age bracket' : (v === 'u13' ? 'Discord requires members to be 13 or older per ToS' : true),
+  src: v => !!v || 'Please let us know how you discovered Rehan Server',
+  int: count => count > 0 || 'Please select at least one role/interest',
+  intro: len => len >= 25 || `Please write at least ${25 - len} more character${(25 - len) > 1 ? 's' : ''}`,
+  rules: agreed => agreed || 'You must agree to the server rules to join'
+};
+
+const LABELS = {
+  user: 'Discord Username',
+  age: 'Age Bracket',
+  src: 'Referral Source',
+  int: 'Interests',
+  intro: 'Introduction',
+  rules: 'Rules Agreement'
+};
+
+const getFieldBox = name => $(`[data-f=${name}]`);
+
+function validateField(name) {
+  const box = getFieldBox(name);
+  if (!box) return true;
+  const result = RULES[name](GETTERS[name]());
+  const isValid = result === true;
+
+  box.classList.toggle('bad', !isValid);
+  const errEl = $('.err', box);
+  if (errEl) errEl.textContent = isValid ? '' : result;
+
+  $$('input, select, textarea', box).forEach(el => {
+    if (isValid) el.removeAttribute('aria-invalid');
+    else el.setAttribute('aria-invalid', 'true');
+  });
+  return isValid;
+}
+
+function validateStep(stepIndex) {
+  const invalidFields = STEPS_FIELDS[stepIndex].filter(name => !validateField(name));
+  const summaryBox = $('#sum');
+
+  if (!invalidFields.length) {
+    summaryBox.hidden = true;
+    return true;
+  }
+
+  summaryBox.hidden = false;
+  $('ul', summaryBox).innerHTML = invalidFields.map(name => `
+    <li><a href="#" data-target="${name}">${LABELS[name]}: ${$('.err', getFieldBox(name)).textContent}</a></li>
+  `).join('');
+  summaryBox.focus();
+  playSfx('click');
+  return false;
+}
+
+// Click on error summary item moves focus to field
+$('#sum').addEventListener('click', e => {
+  const a = e.target.closest('a');
+  if (a) {
+    e.preventDefault();
+    const targetBox = getFieldBox(a.dataset.target);
+    const input = $('input, select, textarea', targetBox);
+    if (input) input.focus();
+  }
+});
+
+function goToStep(index, focusHeader) {
+  currentStep = index;
+  $$('.stp').forEach((el, idx) => el.hidden = idx !== index);
+  $('#st').textContent = `Step ${index + 1} of 3 • ${STEP_TITLES[index]}`;
+  $('#bar').style.width = ((index + 1) / 3) * 100 + '%';
+
+  $('#bk').hidden = index === 0;
+  $('#nx').hidden = index === 2;
+  $('#sb').hidden = index !== 2;
+  $('#sum').hidden = true;
+
+  playSfx('next');
+  if (focusHeader) $('#st').focus();
+}
+
+const updateCounter = () => {
+  const len = form.elements.intro.value.length;
+  $('#cnt').textContent = `${len} / 400 (minimum 25)`;
+};
+
+$('#nx').onclick = () => {
+  if (validateStep(currentStep)) {
+    goToStep(currentStep + 1, true);
+  }
+};
+$('#bk').onclick = () => {
+  goToStep(currentStep - 1, true);
+};
+
+form.addEventListener('focusout', e => {
+  const name = e.target.name;
+  if (RULES[name] && /^(text|select-one|textarea)$/.test(e.target.type)) {
+    validateField(name);
+  }
+});
+
+['input', 'change'].forEach(eventType => {
+  form.addEventListener(eventType, e => {
+    const name = e.target.name;
+    if (!RULES[name]) return;
+    if (getFieldBox(name).classList.contains('bad') || /radio|checkbox/.test(e.target.type)) {
+      validateField(name);
+    }
+    if (name === 'intro') updateCounter();
+  });
+});
+
+/* ==========================================================================
+   DISCORD WEBHOOK INTEGRATION (WITH ERROR RESILIENCE & FALLBACK)
+   ========================================================================== */
+async function sendToDiscordWebhook(data) {
+  if (!CONFIG.webhookUrl) {
+    console.info('[Rehan Server] Demo mode: Discord webhook URL not configured yet. Application logged locally:', data);
+    await new Promise(r => setTimeout(r, 600));
+    return;
+  }
+
+  const payload = {
+    username: 'Rehan Server Applications',
+    avatar_url: 'https://cdn.discordapp.com/embed/avatars/0.png',
+    allowed_mentions: { parse: [] },
+    embeds: [{
+      title: `🎉 New Application Received &bull; ${data.id}`,
+      color: 0x7C3AED, // Violet purple
+      timestamp: new Date().toISOString(),
+      fields: [
+        { name: '👤 Discord User', value: `\`@${data.user}\``, inline: true },
+        { name: '🎂 Age Bracket', value: data.age, inline: true },
+        { name: '🔍 Found Us Via', value: data.src, inline: true },
+        { name: '🏷️ Claimed Interests', value: data.interests.join(', ') || 'None selected' },
+        { name: '📝 Application Intro', value: data.intro }
+      ],
+      footer: { text: 'Rehan Server Verification System' }
+    }]
+  };
+
+  const res = await fetch(CONFIG.webhookUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (!res.ok) throw new Error('Webhook error: ' + res.status);
+}
+
+// Handle Form Submission
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  if (currentStep < 2) {
+    $('#nx').click();
+    return;
+  }
+  if (!validateStep(2)) return;
+
+  const submitBtn = $('#sb');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting Application...';
+
+  const cleanUser = GETTERS.user().replace(/^@/, '').toLowerCase();
+  const applicationId = 'RS-' + [0, 1].map(() => Math.random().toString(36).slice(2, 6).padEnd(4, '0').toUpperCase()).join('-');
+  const selectedInterests = $$('[name=int]:checked', form).map(el => el.value);
+
+  const applicationData = {
+    id: applicationId,
+    user: cleanUser,
+    age: GETTERS.age(),
+    src: GETTERS.src(),
+    interests: selectedInterests,
+    intro: form.elements.intro.value.trim()
+  };
+
+  try {
+    await sendToDiscordWebhook(applicationData);
+  } catch (err) {
+    console.warn('Webhook delivery warning:', err);
+  }
+
+  // Show Success Modal
+  $('#aid').textContent = applicationId;
+  $('#modal-join-dc-btn').href = CONFIG.invite || 'https://discord.gg/S3hRFfxM8';
+  $('#ok').showModal();
+  
+  playSfx('fanfare');
+  launchConfetti();
+
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'Submit & Get Discord Invite';
+});
+
+$('#ok').addEventListener('close', () => {
+  form.reset();
+  updateCounter();
+  $$('.bad').forEach(b => b.classList.remove('bad'));
+  $$('.err').forEach(b => b.textContent = '');
+  $$('[aria-invalid]').forEach(b => b.removeAttribute('aria-invalid'));
+  goToStep(0, true);
+});
+
+// Copy Application ID
+$('#cp').onclick = async () => {
+  const text = $('#aid').textContent;
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    const range = document.createRange();
+    range.selectNodeContents($('#aid'));
+    getSelection().removeAllRanges();
+    getSelection().addRange(range);
+    document.execCommand('copy');
+  }
+  $('#cpm').textContent = 'Copied!';
+  playSfx('click');
+  setTimeout(() => $('#cpm').textContent = 'Copy', 2000);
+};
+
+/* ==========================================================================
+   CONFETTI CANNON ANIMATION
+   ========================================================================== */
+function launchConfetti() {
+  if (RM) return;
+  const canvas = $('#cf');
+  const ctx = canvas.getContext('2d');
+  const colors = ['#7C3AED', '#22D3EE', '#EC4899', '#A3E635', '#FBBF24', '#FFFFFF'];
+  
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const particles = Array.from({ length: 160 }, () => ({
+    x: window.innerWidth / 2,
+    y: window.innerHeight * 0.42,
+    vx: (Math.random() - 0.5) * 22,
+    vy: -Math.random() * 18 - 5,
+    size: 6 + Math.random() * 8,
+    rot: Math.random() * 6,
+    vrot: (Math.random() - 0.5) * 0.4,
+    color: colors[Math.floor(Math.random() * colors.length)]
+  }));
+
+  let frames = 0;
+  function step() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const p of particles) {
+      p.vy += 0.38;
+      p.vx *= 0.99;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.vrot;
+
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
+      ctx.restore();
+    }
+
+    if (++frames < 210) {
+      requestAnimationFrame(step);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+  requestAnimationFrame(step);
+}
+
+/* ==========================================================================
+   DISCORD SETUP CONFIG MODAL (FOR SERVER OWNER)
+   ========================================================================== */
+const configModal = $('#config-modal');
+const cfgInviteInput = $('#cfg-invite');
+const cfgWebhookInput = $('#cfg-webhook');
+
+$('#open-config').onclick = () => {
+  cfgInviteInput.value = CONFIG.invite;
+  cfgWebhookInput.value = CONFIG.webhookUrl;
+  configModal.showModal();
+  playSfx('click');
+};
+
+$('#config-form').onsubmit = (e) => {
+  e.preventDefault();
+  const newInvite = cfgInviteInput.value.trim() || 'https://discord.gg/S3hRFfxM8';
+  const newWebhook = cfgWebhookInput.value.trim();
+
+  CONFIG.invite = newInvite;
+  CONFIG.webhookUrl = newWebhook;
+
+  localStorage.setItem('rehan_discord_invite', newInvite);
+  localStorage.setItem('rehan_discord_webhook', newWebhook);
+
+  updateInviteLinks();
+  configModal.close();
+  playSfx('fanfare');
+  alert('Server settings saved! All "Join Server" buttons now point to your invite.');
+};
+
+/* ==========================================================================
+   INTERACTIVE MOUSE: LEFT-CLICK SHOCKWAVE, FLYING WORDS & GLITTER TRAIL
+   ========================================================================== */
+(() => {
+  if (RM) return;
+
+  const GLITTER_COLORS = ['#22D3EE', '#EC4899', '#A3E635', '#7C3AED', '#FBBF24', '#FFFFFF'];
+  const GLITTER_CHARS = ['✦', '★', '✧', '•', '✨', '⬥', '◆'];
+
+  // Left click ripple & sparkle shockwave
+  window.addEventListener('pointerdown', e => {
+    // Only on primary left click
+    if (e.button !== 0) return;
+
+    const x = e.clientX;
+    const y = e.clientY;
+
+    // 1. Expanding neon shockwave ring
+    const ripple = document.createElement('div');
+    ripple.className = 'click-ripple';
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
+    document.body.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+
+    // 2. Exploding glitter sparks
+    for (let i = 0; i < 14; i++) {
+      createSpark(x, y, true);
+    }
+
+    // 3. Clicked text / word scatter animation
+    handleTextClick(e, x, y);
+  });
+
+  // Mouse move glitter trail (throttled)
+  let lastMove = 0;
+  window.addEventListener('pointermove', e => {
+    const now = performance.now();
+    if (now - lastMove < 45) return; // ~22fps trail to remain light and clean
+    lastMove = now;
+    if (Math.random() < 0.65) {
+      createSpark(e.clientX, e.clientY, false);
+    }
+  }, { passive: true });
+
+  // Spark physics particle
+  function createSpark(x, y, isBurst) {
+    const spark = document.createElement('span');
+    spark.className = 'glitter-spark';
+    spark.textContent = GLITTER_CHARS[Math.floor(Math.random() * GLITTER_CHARS.length)];
+    const color = GLITTER_COLORS[Math.floor(Math.random() * GLITTER_COLORS.length)];
+    spark.style.color = color;
+
+    const size = isBurst ? 10 + Math.random() * 14 : 8 + Math.random() * 8;
+    spark.style.fontSize = size + 'px';
+
+    let px = x;
+    let py = y;
+    const angle = Math.random() * Math.PI * 2;
+    const speed = isBurst ? 2 + Math.random() * 9 : 0.4 + Math.random() * 1.8;
+    let vx = Math.cos(angle) * speed;
+    let vy = Math.sin(angle) * speed - (isBurst ? 2 : 0.8);
+    let rot = Math.random() * 360;
+    const vrot = (Math.random() - 0.5) * 20;
+    let opacity = 1;
+    const decay = isBurst ? 0.022 + Math.random() * 0.018 : 0.035;
+
+    spark.style.left = px + 'px';
+    spark.style.top = py + 'px';
+    document.body.appendChild(spark);
+
+    function step() {
+      px += vx;
+      py += vy;
+      vy += 0.16; // gravity
+      vx *= 0.98;
+      rot += vrot;
+      opacity -= decay;
+
+      if (opacity <= 0) {
+        spark.remove();
+        return;
+      }
+
+      spark.style.transform = `translate(${px - x}px, ${py - y}px) rotate(${rot}deg) scale(${opacity})`;
+      spark.style.opacity = opacity;
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // Detect words at click position and launch flying floating fragments
+  function handleTextClick(e, clickX, clickY) {
+    const target = e.target;
+    if (!target) return;
+
+    // Trigger subtle glitch vibration on target
+    target.classList.add('word-glitch');
+    setTimeout(() => target.classList.remove('word-glitch'), 380);
+
+    // Get clicked text or word
+    let textToFly = '';
+    
+    // Try to get word at caret
+    if (document.caretRangeFromPoint) {
+      const range = document.caretRangeFromPoint(clickX, clickY);
+      if (range && range.startContainer && range.startContainer.nodeType === Node.TEXT_NODE) {
+        const fullText = range.startContainer.textContent;
+        const offset = range.startOffset;
+        const left = fullText.slice(0, offset).split(/\s+/).pop();
+        const right = fullText.slice(offset).split(/\s+/).shift();
+        const word = (left + right).trim();
+        if (word.length >= 2) {
+          textToFly = word;
+        }
+      }
+    }
+
+    // Fallback to text content of clicked element
+    if (!textToFly && target.innerText) {
+      const words = target.innerText.trim().split(/\s+/).filter(w => w.length > 1);
+      if (words.length > 0) {
+        textToFly = words[Math.floor(Math.random() * Math.min(words.length, 3))];
+      }
+    }
+
+    if (!textToFly) {
+      textToFly = 'REHAN';
+    }
+
+    // Launch letters of the word flying in 3D arc!
+    const letters = textToFly.slice(0, 10).split('');
+    letters.forEach((char, idx) => {
+      const frag = document.createElement('span');
+      frag.className = 'flying-fragment';
+      frag.textContent = char;
+
+      const color = GLITTER_COLORS[idx % GLITTER_COLORS.length];
+      frag.style.color = color;
+      frag.style.fontSize = (18 + Math.random() * 12) + 'px';
+
+      let px = clickX + (idx - letters.length / 2) * 14;
+      let py = clickY;
+      let vx = (Math.random() - 0.5) * 14;
+      let vy = -Math.random() * 12 - 4;
+      let rot = (Math.random() - 0.5) * 45;
+      const vrot = (Math.random() - 0.5) * 25;
+      let opacity = 1;
+
+      frag.style.left = px + 'px';
+      frag.style.top = py + 'px';
+      document.body.appendChild(frag);
+
+      function anim() {
+        px += vx;
+        py += vy;
+        vy += 0.32; // upward pop then falling gravity
+        vx *= 0.985;
+        rot += vrot;
+        opacity -= 0.016;
+
+        if (opacity <= 0) {
+          frag.remove();
+          return;
+        }
+
+        frag.style.transform = `translate(${px - clickX}px, ${py - clickY}px) rotate(${rot}deg) scale(${0.8 + opacity * 0.4})`;
+        frag.style.opacity = opacity;
+        requestAnimationFrame(anim);
+      }
+      requestAnimationFrame(anim);
+    });
+  }
+})();
+</script>
+</body>
+</html>
